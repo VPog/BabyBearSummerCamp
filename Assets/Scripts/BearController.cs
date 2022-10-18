@@ -19,11 +19,53 @@ public class BearController : MonoBehaviour
     private float hunger = 5;
     private float energy = 5;
     private Temperment temperment;
-    
-    
+
+    //Bear Movement
+    public float moveSpeed = 5f;
+    public Transform movePoint;
+    public LayerMask stopsMovement;
+
+
+    void Start()
+    {
+        //unparent movePoint with bear so it doesn't follow bear's movement
+        movePoint.parent = null;
+    }
+
+    void Update()
+    {
+        //determine the place where the position is indicated by the user
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+
+
+        //make sure the player really want to change the move position
+        if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
+        {
+            //two if statements: allow for diagonal movements 
+            if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
+            {
+                Vector3 moveVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
+                if (!Physics2D.OverlapCircle(movePoint.position + moveVector, .2f, stopsMovement))
+                {
+                    movePoint.position += moveVector;
+                }
+            }
+
+            if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
+            {
+                Vector3 moveVector = new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
+                if (!Physics2D.OverlapCircle(movePoint.position + moveVector, .2f, stopsMovement))
+                {
+                    movePoint.position += moveVector;
+                }
+            }
+        }
+
+    }
+
     //The GUI connected to a bearObject for testing purposes
     //public TextMeshProUGUI bearText;
-    
+
     //Static Array containing every single temperment, currently only contains two temperments 
     static readonly Temperment[] TEMPERMENTS = new Temperment[]
     {
@@ -80,17 +122,17 @@ public class BearController : MonoBehaviour
     #region Unity Methods
 
     // Start is called before the first frame update
-    void Start()
-    {
-        //Sets the temperment 
-        temperment = new Temperment(TEMPERMENTS[(int)Random.Range(0, TEMPERMENTS.Length)]);
+    //void Start()
+    //{
+    //    //Sets the temperment 
+    //    temperment = new Temperment(TEMPERMENTS[(int)Random.Range(0, TEMPERMENTS.Length)]);
         
-        UpdateText();
-        StartCoroutine(MinuteUpdate());
+    //    UpdateText();
+    //    StartCoroutine(MinuteUpdate());
         
         
         
-    }
+    //}
 
     #endregion
 
