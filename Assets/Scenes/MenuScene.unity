@@ -646,6 +646,7 @@ GameObject:
   - component: {fileID: 292771717}
   - component: {fileID: 292771716}
   - component: {fileID: 292771715}
+  - component: {fileID: 292771718}
   m_Layer: 0
   m_Name: BabyBear
   m_TagString: Untagged
@@ -665,7 +666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a3e6eddfa9f8344e9868effe61241cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bearController: {fileID: 0}
+  bearManager: {fileID: 725759531}
 --- !u!212 &292771716
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -734,6 +735,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &292771718
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292771714}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.9, y: 1.2}
+    newSize: {x: 0.9, y: 1.2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.9, y: 1.2}
+  m_EdgeRadius: 0
 --- !u!1 &297524692
 GameObject:
   m_ObjectHideFlags: 0
@@ -1547,6 +1574,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708295252}
   m_CullTransparentMesh: 1
+--- !u!1 &725759531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 725759533}
+  - component: {fileID: 725759532}
+  m_Layer: 0
+  m_Name: BearManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &725759532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725759531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe0b3e93078c4b298bc04fc4e76d697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainTilemap: {fileID: 1937024270}
+  SelectedAnyBearThisFrame: 0
+--- !u!4 &725759533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725759531}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.502, y: -0.959, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &756986818
 GameObject:
   m_ObjectHideFlags: 0
@@ -6988,6 +7061,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1894139573}
   m_CullTransparentMesh: 1
+--- !u!1 &1937024270 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5591477204161556211, guid: 85896a3b2f636d349b5743d2e753099c, type: 3}
+  m_PrefabInstance: {fileID: 1487946995}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2017069840
 PrefabInstance:
   m_ObjectHideFlags: 0
