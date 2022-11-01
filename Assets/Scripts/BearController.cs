@@ -29,7 +29,9 @@ public class BearController : MonoBehaviour
     private float hunger = 5;
     private float energy = 5;
     private Temperament temperament;
-    
+
+    // Current pathfinding path, if any
+    IList<Vector2Int> PathToFollow = null;
     
     //The GUI connected to a bearObject for testing purposes
     //public TextMeshProUGUI bearText;

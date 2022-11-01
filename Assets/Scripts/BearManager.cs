@@ -89,10 +89,12 @@ public class BearManager : MonoBehaviour
                     result += item.ToString() + ", ";
                 }
                 print("resulting path: " + result);
+
+                SelectedBear.PathToFollow = result;
             }
 
             // Deselect any selected bears
-            SelectedBear = null;
+            //SelectedBear = null;
         }
         SelectedAnyBearThisFrame = false;
     }
