@@ -53,6 +53,17 @@ public class BearManager : MonoBehaviour
         return TileAtGridPos(grid, PosOnGrid(grid, worldPos));
     }
 
+    public Vector3 TilePosToWorldPos(Tilemap grid, Vector2Int tilePos)
+    {
+        // Get the position on the grid
+        Vector3 posInWorld = mainTilemap.transform.TransformVector(new Vector3(tilePos.x * grid.cellSize.x, tilePos.y * grid.cellSize.y, 0));
+        return posInWorld;
+    }
+    public Vector3 TilePosToWorldPos(Vector2Int tilePos)
+    {
+        return TilePosToWorldPos(mainTilemap.GetComponent<Tilemap>(), tilePos);
+    }
+
     int EdgeWeight(Vector2Int a, Vector2Int b)
     {
         return 1;
@@ -90,7 +101,7 @@ public class BearManager : MonoBehaviour
                 }
                 print("resulting path: " + result);
 
-                SelectedBear.PathToFollow = result;
+                SelectedBear.PathToFollow = pathToFollow;
             }
 
             // Deselect any selected bears
