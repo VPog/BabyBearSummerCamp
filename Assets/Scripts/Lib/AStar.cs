@@ -8,6 +8,24 @@ using PriorityQueueDemo;
 
 class AStar
 {
+    static void print(string s, KeyValuePair<int, Vector2Int> p)
+    {
+        print(s + p.ToString());
+    }
+    static void print(PriorityQueue<int, Vector2Int> pq)
+    {
+        string s = "PriorityQueue:\n";
+        foreach (var item in pq)
+        {
+            s += "  " + item.Key.ToString() + ": " + item.Value + "\n";
+        }
+        print(s);
+    }
+    static void print(string s)
+    {
+        Debug.Log(s);
+    }
+
     static int heuristic(Vector2Int a, Vector2Int b)
     {
         // Manhattan distance (for speed)
@@ -43,12 +61,14 @@ class AStar
             cameFrom[neighbor] = current;
             gScore[neighbor] = tentative_gScore;
             var oldFScore = fScore.GetValueOrDefault(neighbor, int.MaxValue);
-            fScore[neighbor] = tentative_gScore + heuristic(neighbor, goal);
+            var fscore = tentative_gScore + heuristic(neighbor, goal);
+            fScore[neighbor] = fscore;
             if (oldFScore == int.MaxValue)
             {
-                var neighbor_ = new KeyValuePair<int, Vector2Int>(oldFScore, neighbor);
+                var neighbor_ = new KeyValuePair<int, Vector2Int>(fscore, neighbor);
                 if (!openSet.Contains(neighbor_))
                 {
+                    print("Adding to open set: ", neighbor_);
                     openSet.Add(neighbor_);
                 }
             }
@@ -82,6 +102,7 @@ class AStar
 
         while (openSet.Count != 0)
         {
+            print(openSet);
             // This operation can occur in O(Log(N)) time if openSet is a min-heap or a priority queue
             var current = openSet.Peek();
             if (current.Value == goal)
@@ -91,25 +112,26 @@ class AStar
 
             openSet.Remove(current);
             // For all neighbors that exist:
-            if (start.x - 1 >= 0)
+            if (start.x - 1 >= -tilemapDimensions.x/2)
             {
-                process(edgeWeight, new Vector2Int(start.x - 1, start.y), gScore, fScore, cameFrom, openSet, current.Value, goal);
+                process(edgeWeight, new Vector2Int(current.Value.x - 1, current.Value.y), gScore, fScore, cameFrom, openSet, current.Value, goal);
             }
-            if (start.x + 1 < tilemapDimensions.x)
+            if (start.x + 1 < tilemapDimensions.x/2)
             {
-                process(edgeWeight, new Vector2Int(start.x + 1, start.y), gScore, fScore, cameFrom, openSet, current.Value, goal);
+                process(edgeWeight, new Vector2Int(current.Value.x + 1, current.Value.y), gScore, fScore, cameFrom, openSet, current.Value, goal);
             }
-            if (start.y - 1 >= 0)
+            if (start.y - 1 >= -tilemapDimensions.y/2)
             {
-                process(edgeWeight, new Vector2Int(start.x, start.y - 1), gScore, fScore, cameFrom, openSet, current.Value, goal);
+                process(edgeWeight, new Vector2Int(current.Value.x, current.Value.y - 1), gScore, fScore, cameFrom, openSet, current.Value, goal);
             }
-            if (start.y + 1 < tilemapDimensions.y)
+            if (start.y + 1 < tilemapDimensions.y/2)
             {
-                process(edgeWeight, new Vector2Int(start.x, start.y + 1), gScore, fScore, cameFrom, openSet, current.Value, goal);
+                process(edgeWeight, new Vector2Int(current.Value.x, current.Value.y + 1), gScore, fScore, cameFrom, openSet, current.Value, goal);
             }
         }
 
         // Open set is empty but goal was never reached
+        Debug.Log("goal not reached");
         return new List<Vector2Int>();
     }
 

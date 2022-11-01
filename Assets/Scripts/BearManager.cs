@@ -88,7 +88,7 @@ public class BearManager : MonoBehaviour
                 {
                     result += item.ToString() + ", ";
                 }
-                print(result);
+                print("resulting path: " + result);
             }
 
             // Deselect any selected bears
