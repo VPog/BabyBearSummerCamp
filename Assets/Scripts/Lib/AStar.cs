@@ -54,7 +54,13 @@ class AStar
     {
         // d(current,neighbor) is the weight of the edge from current to neighbor
         // tentative_gScore is the distance from start to the neighbor through current
-        var tentative_gScore = gScore.GetValueOrDefault(current, int.MaxValue) + edgeWeight(current, neighbor);
+        var weight = edgeWeight(current, neighbor);
+        if (weight == int.MaxValue)
+        {
+            // Unpassable
+            return;
+        }
+        var tentative_gScore = gScore.GetValueOrDefault(current, int.MaxValue) + weight;
         if (tentative_gScore < gScore.GetValueOrDefault(neighbor, int.MaxValue))
         {
             // This path to neighbor is better than any previous one. Record it!

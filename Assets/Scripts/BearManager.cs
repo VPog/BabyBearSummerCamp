@@ -29,18 +29,22 @@ public class BearManager : MonoBehaviour
     }
 
     public bool SelectedAnyBearThisFrame = false;
+    Tilemap grid;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        grid = mainTilemap.GetComponent<Tilemap>();
     }
 
     Vector2Int PosOnGrid(Tilemap grid, Vector3 worldPos)
     {
         // Get the position on the grid
-        Vector3 positionRelativeToGrid = mainTilemap.transform.InverseTransformPoint(worldPos);
-        return new Vector2Int((int)(positionRelativeToGrid.x / (int)grid.cellSize.x * (int)grid.cellSize.x), (int)(positionRelativeToGrid.y / (int)grid.cellSize.y * (int)grid.cellSize.y));
+        var pos = grid.WorldToCell(worldPos);
+        return new Vector2Int(pos.x, pos.y);
+
+        //Vector3 positionRelativeToGrid = mainTilemap.transform.InverseTransformPoint(worldPos);
+        //return new Vector2Int((int)(positionRelativeToGrid.x / (int)grid.cellSize.x * (int)grid.cellSize.x), (int)(positionRelativeToGrid.y / (int)grid.cellSize.y * (int)grid.cellSize.y));
     }
 
     TileBase TileAtGridPos(Tilemap grid, Vector2Int gridPos)
@@ -56,8 +60,17 @@ public class BearManager : MonoBehaviour
     public Vector3 TilePosToWorldPos(Tilemap grid, Vector2Int tilePos)
     {
         // Get the position on the grid
-        Vector3 posInWorld = mainTilemap.transform.TransformVector(new Vector3(tilePos.x * grid.cellSize.x, tilePos.y * grid.cellSize.y, 0));
-        return posInWorld;
+        var pos = grid.CellToWorld(new Vector3Int(tilePos.x, tilePos.y, 0));
+        if (selectedBear != null)
+        {
+            Collider2D collider = selectedBear.GetComponent<Collider2D>();
+            pos.x += collider.bounds.size.x / 2.0f;
+            pos.y += collider.bounds.size.y / 2.0f;
+        }
+        return pos;
+
+        //Vector3 posInWorld = mainTilemap.transform.TransformVector(new Vector3(tilePos.x * grid.cellSize.x, tilePos.y * grid.cellSize.y, 0));
+        //return posInWorld;
     }
     public Vector3 TilePosToWorldPos(Vector2Int tilePos)
     {
@@ -66,7 +79,14 @@ public class BearManager : MonoBehaviour
 
     int EdgeWeight(Vector2Int a, Vector2Int b)
     {
-        return 1;
+        //Tile tileA = grid.GetTile<Tile>(new Vector3Int(a.x, a.y, 0));
+        Tile tileB = grid.GetTile<Tile>(new Vector3Int(b.x, b.y, 0));
+        if (tileB != null && tileB.sprite.name == "transparent_grey"
+            )
+        {
+            return 1;
+        }
+        return int.MaxValue;
     }
 
     void Update()
@@ -79,7 +99,6 @@ public class BearManager : MonoBehaviour
             {
                 // Give pathfinding command at the position of the click, if the tile is reachable etc.
                 //print(Input.mousePosition);
-                Tilemap grid = mainTilemap.GetComponent<Tilemap>();
                 // Get our click position in the world
                 Vector3 position = camera.ScreenToWorldPoint(Input.mousePosition);
                 // Get our click position on the grid and then get the tile at that position
@@ -90,7 +109,7 @@ public class BearManager : MonoBehaviour
                 // Get our bear's position on the grid and then get the tile at that position
                 Vector2Int bearCellPos = PosOnGrid(grid, SelectedBear.transform.position);
                 // Get tile at bear position
-                TileBase tileBear = TileAtGridPos(grid, bearCellPos);
+                //TileBase tileBear = TileAtGridPos(grid, bearCellPos);
 
                 print("Pathfinding from " + bearCellPos + " to " + clickCellPos);
                 IList<Vector2Int> pathToFollow = AStar.A_Star(EdgeWeight, bearCellPos, clickCellPos, new Vector2Int(grid.size.x, grid.size.y));
