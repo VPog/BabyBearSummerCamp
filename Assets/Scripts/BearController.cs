@@ -28,12 +28,62 @@ public class BearController : MonoBehaviour
     private float happiness = 5;
     private float hunger = 5;
     private float energy = 5;
+
+    //Bear Movement
+    public float moveSpeed = 5f;
+    public Transform movePoint;
+    public LayerMask stopsMovement;
+
+
+    void Start()
+    {
+        //unparent movePoint with bear so it doesn't follow bear's movement
+        movePoint.parent = null;
+
+        //Sets the temperment 
+        temperament = new Temperament(TEMPERAMENTS[(int)Random.Range(0, TEMPERAMENTS.Length)]);
+
+        UpdateText();
+        StartCoroutine(MinuteUpdate());
+    }
+
+    void Update()
+    {
+        //determine the place where the position is indicated by the user
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+
+
+        //make sure the player really want to change the move position
+        if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
+        {
+            //two if statements: allow for diagonal movements 
+            if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
+            {
+                Vector3 moveVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
+                if (!Physics2D.OverlapCircle(movePoint.position + moveVector, .2f, stopsMovement))
+                {
+                    movePoint.position += moveVector;
+                }
+            }
+
+            if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
+            {
+                Vector3 moveVector = new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
+                if (!Physics2D.OverlapCircle(movePoint.position + moveVector, .2f, stopsMovement))
+                {
+                    movePoint.position += moveVector;
+                }
+            }
+        }
+
+    }
+
     private Temperament temperament;
     
-    
+   
     //The GUI connected to a bearObject for testing purposes
     //public TextMeshProUGUI bearText;
-    
+
     //Static Array containing every single temperment, currently only contains two temperments 
     static readonly Temperament[] TEMPERAMENTS = new Temperament[]
     {
@@ -88,19 +138,6 @@ public class BearController : MonoBehaviour
     }
 
     #region Unity Methods
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //Sets the temperment 
-        temperament = new Temperament(TEMPERAMENTS[(int)Random.Range(0, TEMPERAMENTS.Length)]);
-        
-        UpdateText();
-        StartCoroutine(MinuteUpdate());
-
-
-
-    }
 
     #endregion
 
@@ -168,8 +205,6 @@ private void GenerateTemperment()
     }
 
     #endregion
-
-  
 
 
 }
