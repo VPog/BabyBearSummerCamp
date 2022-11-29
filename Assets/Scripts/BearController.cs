@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.Tilemaps;
 
 public class BearController : MonoBehaviour
 {
@@ -49,6 +49,19 @@ public class BearController : MonoBehaviour
 
     void Update()
     {
+        if (PathToFollow != null && PathToFollow.Count != 0)
+        {
+            // Follow last item in path
+            BearManager bm = bearManager.GetComponent<BearManager>();
+            Tilemap tm = bm.mainTilemap.GetComponent<Tilemap>();
+            movePoint.position = bm.TilePosToWorldPos(tm, PathToFollow[PathToFollow.Count-1]);
+            if (Mathf.Abs(transform.position.x - movePoint.position.x) < tm.cellSize.x
+                && Mathf.Abs(transform.position.y - movePoint.position.y) < tm.cellSize.y)
+            {
+                PathToFollow.RemoveAt(PathToFollow.Count - 1);
+            }
+        }
+
         //determine the place where the position is indicated by the user
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
@@ -79,8 +92,10 @@ public class BearController : MonoBehaviour
     }
 
     private Temperament temperament;
-    
-   
+
+    // Current pathfinding path, if any
+    public IList<Vector2Int> PathToFollow = null;
+
     //The GUI connected to a bearObject for testing purposes
     //public TextMeshProUGUI bearText;
 

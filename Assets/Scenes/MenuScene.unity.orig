@@ -755,11 +755,15 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+<<<<<<< HEAD
   - {fileID: 982708559}
+  - {fileID: 1749297680}
+=======
   - {fileID: 1749297680}
   - {fileID: 982708559}
   - {fileID: 1896196515}
   - {fileID: 982708559}
+>>>>>>> 2109cb14ce6d3ec83ff5c5760a82a1f1d3444beb
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1431,7 +1435,10 @@ RectTransform:
   - {fileID: 595179995}
   - {fileID: 1894139574}
   - {fileID: 1842080989}
+<<<<<<< HEAD
+=======
   - {fileID: 1387075823}
+>>>>>>> 2109cb14ce6d3ec83ff5c5760a82a1f1d3444beb
   m_Father: {fileID: 834121829}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1673,7 +1680,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainTilemap: {fileID: 1937024270}
+<<<<<<< HEAD
+  camera: {fileID: 0}
+=======
   camera: {fileID: 1437726044}
+>>>>>>> 2109cb14ce6d3ec83ff5c5760a82a1f1d3444beb
   SelectedAnyBearThisFrame: 0
 --- !u!4 &725759533
 Transform:
@@ -2033,7 +2044,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 292771717}
+<<<<<<< HEAD
   m_RootOrder: 1
+=======
+  m_RootOrder: 0
+>>>>>>> 1b60765a03604c5c223fb83d9bddb545cb3f30e6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &997505380
 GameObject:
