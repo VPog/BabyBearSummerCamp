@@ -65,7 +65,7 @@ public class BearManager : MonoBehaviour
         {
             Collider2D collider = selectedBear.GetComponent<Collider2D>();
             pos.x += collider.bounds.size.x / 2.0f;
-            pos.y += collider.bounds.size.y / 2.0f;
+            pos.y += collider.bounds.size.y;
         }
         return pos;
 
