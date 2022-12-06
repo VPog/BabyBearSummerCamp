@@ -1,31 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class BearManager : MonoBehaviour
 {
-    private BearController selectedBear = null;
+    private List<BearController> selectedBears = new List<BearController>();
     public GameObject mainTilemap; // This is the walkable tiles
     public Camera camera;
-    public BearController SelectedBear
+    public bool shiftPressed {
+        get => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+    }
+    public ReadOnlyCollection<BearController> SelectedBears
     {
-        get => selectedBear;
-        set
+        get => selectedBears.AsReadOnly();
+    }
+    public void DeselectAllBears()
+    {
+        foreach (BearController bear in selectedBears)
         {
-            if (selectedBear != null)
-            {
-                selectedBear.Selected = false;
-            }
-
-            selectedBear = value;
-
-            if (selectedBear != null)
-            {
-                selectedBear.Selected = true;
-            }
-            SelectedAnyBearThisFrame = true;
+            bear.Selected = false;
         }
+        selectedBears.Clear();
+    }
+    public void SelectBear(BearController bear)
+    {
+        bear.Selected = true;
+        selectedBears.Add(bear);
+        SelectedAnyBearThisFrame = true;
     }
 
     public bool SelectedAnyBearThisFrame = false;
@@ -61,8 +64,9 @@ public class BearManager : MonoBehaviour
     {
         // Get the position on the grid
         var pos = grid.CellToWorld(new Vector3Int(tilePos.x, tilePos.y, 0));
-        if (selectedBear != null)
+        if (selectedBears.Count > 0)
         {
+            var selectedBear = selectedBears[0];
             Collider2D collider = selectedBear.GetComponent<Collider2D>();
             pos.x += collider.bounds.size.x / 2.0f;
             pos.y += collider.bounds.size.y;
@@ -95,32 +99,35 @@ public class BearManager : MonoBehaviour
         {
             // This should run before any bear receives the click event
 
-            if (SelectedBear != null)
+            if (selectedBears.Count > 0)
             {
-                // Give pathfinding command at the position of the click, if the tile is reachable etc.
-                //print(Input.mousePosition);
-                // Get our click position in the world
-                Vector3 position = camera.ScreenToWorldPoint(Input.mousePosition);
-                // Get our click position on the grid and then get the tile at that position
-                Vector2Int clickCellPos = PosOnGrid(grid, position);
-                // Get tile at click position
-                TileBase tileDest = TileAtGridPos(grid, clickCellPos);
-
-                // Get our bear's position on the grid and then get the tile at that position
-                Vector2Int bearCellPos = PosOnGrid(grid, SelectedBear.transform.position);
-                // Get tile at bear position
-                //TileBase tileBear = TileAtGridPos(grid, bearCellPos);
-
-                print("Pathfinding from " + bearCellPos + " to " + clickCellPos);
-                IList<Vector2Int> pathToFollow = AStar.A_Star(EdgeWeight, bearCellPos, clickCellPos, new Vector2Int(grid.size.x, grid.size.y));
-                string result = "";
-                foreach (var item in pathToFollow)
+                foreach (BearController SelectedBear in selectedBears)
                 {
-                    result += item.ToString() + ", ";
-                }
-                print("resulting path: " + result);
+                    // Give pathfinding command at the position of the click, if the tile is reachable etc.
+                    //print(Input.mousePosition);
+                    // Get our click position in the world
+                    Vector3 position = camera.ScreenToWorldPoint(Input.mousePosition);
+                    // Get our click position on the grid and then get the tile at that position
+                    Vector2Int clickCellPos = PosOnGrid(grid, position);
+                    // Get tile at click position
+                    TileBase tileDest = TileAtGridPos(grid, clickCellPos);
 
-                SelectedBear.PathToFollow = pathToFollow;
+                    // Get our bear's position on the grid and then get the tile at that position
+                    Vector2Int bearCellPos = PosOnGrid(grid, SelectedBear.transform.position);
+                    // Get tile at bear position
+                    //TileBase tileBear = TileAtGridPos(grid, bearCellPos);
+
+                    print("Pathfinding from " + bearCellPos + " to " + clickCellPos);
+                    IList<Vector2Int> pathToFollow = AStar.A_Star(EdgeWeight, bearCellPos, clickCellPos, new Vector2Int(grid.size.x, grid.size.y));
+                    string result = "";
+                    foreach (var item in pathToFollow)
+                    {
+                        result += item.ToString() + ", ";
+                    }
+                    print("resulting path: " + result);
+
+                    SelectedBear.PathToFollow = pathToFollow;
+                }
             }
 
             // Deselect any selected bears

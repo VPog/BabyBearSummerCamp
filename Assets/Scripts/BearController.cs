@@ -216,7 +216,12 @@ private void GenerateTemperment()
 
     public void OnMouseDown()
     {
-        bearManager.GetComponent<BearManager>().SelectedBear = this;
+        var b = bearManager.GetComponent<BearManager>();
+        if (!b.shiftPressed)
+        {
+            b.DeselectAllBears();
+        }
+        b.SelectBear(this);
     }
 
     #endregion
