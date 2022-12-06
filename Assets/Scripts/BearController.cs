@@ -49,7 +49,6 @@ public class BearController : MonoBehaviour
 
     void Update()
     {
-<<<<<<< HEAD
         if (PathToFollow != null && PathToFollow.Count != 0)
         {
             // Follow last item in path
@@ -63,8 +62,6 @@ public class BearController : MonoBehaviour
             }
         }
 
-=======
->>>>>>> 1b60765a03604c5c223fb83d9bddb545cb3f30e6
         //determine the place where the position is indicated by the user
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
