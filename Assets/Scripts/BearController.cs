@@ -224,6 +224,44 @@ private void GenerateTemperment()
         b.SelectBear(this);
     }
 
+    public void OnMouseOver()
+    {
+        if (name == "CounselorBear" && Input.GetMouseButtonDown(1))
+        { // Right mouse button down
+            // For all baby bears selected, tell them to go the bear at cursor if any
+            // Get bears under the mouse
+            //int layerObject = 1;
+            //Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+            //RaycastHit2D hit = Physics2D.Raycast(ray, ray, layerObject);
+            //if (hit.collider != null)
+            //{
+            //    var bc = hit.collider.gameObject.GetComponent<BearController>();
+            //    if (bc != null)
+            //    {
+            //        // This is a bear
+            //    }
+            //}
+
+            // Check if it is a counselor
+            var bc = this;
+            var bm = bearManager.GetComponent<BearManager>();
+
+            // Tell the counselor to show commands and select the counselor
+            bm.DeselectAllBears();
+            bm.SelectBear(bc);
+            bc.ShowCommands();
+        }
+    }
+
+    public void ShowCommands()
+    {
+        if (name == "CounselorBear")
+        {
+            // Show commands for the baby bears selected
+            Debug.Log("TODO: show UI");
+        }
+    }
+
     #endregion
 
 

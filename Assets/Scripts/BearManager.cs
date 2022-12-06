@@ -103,6 +103,13 @@ public class BearManager : MonoBehaviour
             {
                 foreach (BearController SelectedBear in selectedBears)
                 {
+                    // Check bear type
+                    if (SelectedBear.gameObject.name == "BabyBear")
+                    {
+                        // Baby bears can't move
+                        continue;
+                    }
+
                     // Give pathfinding command at the position of the click, if the tile is reachable etc.
                     //print(Input.mousePosition);
                     // Get our click position in the world
