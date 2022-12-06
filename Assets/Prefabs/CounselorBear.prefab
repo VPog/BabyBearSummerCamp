@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3286668349038718314
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 535783654504096320, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 535783654504096322, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 56e09b3cbe6f640258cfa6e90145bd5e, type: 3}
+    - target: {fileID: 535783654504096323, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 535783654504096323, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.4367523
+      objectReference: {fileID: 0}
+    - target: {fileID: 535783654504096323, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4036071
+      objectReference: {fileID: 0}
+    - target: {fileID: 535783654504096323, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 535783654504096323, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 535783654504096323, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 535783654504096323, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 535783654504096323, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 535783654504096323, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 535783654504096323, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 535783654504096323, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 535783654504096324, guid: 736b3e6bf999246419a1407d45105377, type: 3}
+      propertyPath: m_Name
+      value: CounselorBear
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 736b3e6bf999246419a1407d45105377, type: 3}
